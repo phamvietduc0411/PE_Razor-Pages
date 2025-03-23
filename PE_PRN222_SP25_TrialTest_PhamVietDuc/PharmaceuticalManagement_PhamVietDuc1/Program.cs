@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿ using Microsoft.EntityFrameworkCore;
 using Repository.Repo;
 using Service.Services;
 using System.Configuration;
@@ -54,6 +54,11 @@ namespace PharmaceuticalManagement_PhamVietDuc1
             app.UseRouting();
 
             app.UseAuthorization();
+            app.MapGet("/", context =>
+            {
+                context.Response.Redirect("/Login/Login");
+                return Task.CompletedTask;
+            });
 
             app.MapRazorPages();
 

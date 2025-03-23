@@ -6,16 +6,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Repository.Models;
+using Service.Services;
 
 namespace PharmaceuticalManagement_PhamVietDuc1.Pages.Pharmaceutical
 {
     public class DetailsModel : PageModel
     {
         private readonly Sp25PharmaceuticalDbContext _context;
+        private readonly ManufactureService _manufactureService;
+        private readonly MedicineService _medicineService;
 
-        public DetailsModel(Sp25PharmaceuticalDbContext context)
+        public DetailsModel(Sp25PharmaceuticalDbContext context, ManufactureService manufactureService, MedicineService medicineService)
         {
             _context = context;
+            _manufactureService = manufactureService;
+            _medicineService = medicineService;
+        
         }
 
         public MedicineInformation MedicineInformation { get; set; } = default!;
@@ -34,7 +40,7 @@ namespace PharmaceuticalManagement_PhamVietDuc1.Pages.Pharmaceutical
                 return NotFound();
             }
 
-            var medicineinformation = await _context.MedicineInformations.FirstOrDefaultAsync(m => m.MedicineId == id);
+            var medicineinformation = await _medicineService.GetMedicineByID(id);
             if (medicineinformation == null)
             {
                 return NotFound();

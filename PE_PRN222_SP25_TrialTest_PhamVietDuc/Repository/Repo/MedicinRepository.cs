@@ -44,7 +44,10 @@ namespace Repository.Repo
 
         public async Task<MedicineInformation> GetIdAsync(string id)
         {
-            var rs = await _context.MedicineInformations.FindAsync(id);
+            var rs = await _context.MedicineInformations
+     .Include(m => m.Manufacturer)
+     .FirstOrDefaultAsync(m => m.MedicineId == id);
+
 
             return rs != null ? rs : null;
 
