@@ -14,7 +14,7 @@ namespace PharmaceuticalManagement_PhamVietDuc1.Pages.Pharmaceutical
     {
         private readonly Sp25PharmaceuticalDbContext _context;
         public List<SelectListItem> Manufacturers { get; set; } = new();
-        public string ErrorMessage { get; set; }
+        public string ErrorMessageCreate { get; set; }
         private readonly ManufactureService _manufactureService;
         private readonly MedicineService _medicineService;
         [BindProperty]
@@ -29,10 +29,13 @@ namespace PharmaceuticalManagement_PhamVietDuc1.Pages.Pharmaceutical
 
         public async Task<IActionResult> OnGet()
         {
+            ErrorMessageCreate = HttpContext.Session.GetString("ErrorMessageCreate") ?? string.Empty;
+            HttpContext.Session.Remove("ErrorMessageCreate");
+
             var role = HttpContext.Session.GetInt32("UserRole");
             if (role != 2)
             {
-                HttpContext.Session.SetString("ErrorMessage", "You don't have permission");
+                HttpContext.Session.SetString("ErrorMessage", "You don't have permission");               
                 return RedirectToPage("./Index");
 
             }
@@ -43,16 +46,24 @@ namespace PharmaceuticalManagement_PhamVietDuc1.Pages.Pharmaceutical
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            var check = await _medicineService.GetMedicineByID(MedicineInformation.MedicineId);
+            if (check != null)
+            {
+                HttpContext.Session.SetString("ErrorMessageCreate", "Please choose another Medicine ID");
+                await LoadManufacturers();
+                return RedirectToPage("./Create");
+            }
+
             if (!ModelState.IsValid)
             {
+                await LoadManufacturers();
                 return Page();
             }
 
-
             await _medicineService.Create(MedicineInformation);
-
             return RedirectToPage("./Index");
         }
+
         private async Task LoadManufacturers()
         {
             var manufacturers = await _manufactureService.GetAll();

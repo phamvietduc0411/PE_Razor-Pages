@@ -3,6 +3,14 @@
 
 <h4>MedicineInformation</h4>
 <hr />
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessageCreate))
+{
+    <div class="alert alert-danger text-center">
+        @Model.ErrorMessageCreate
+    </div>
+}
+
 <div class="row">
     <div class="col-md-4">
         <form method="post">
