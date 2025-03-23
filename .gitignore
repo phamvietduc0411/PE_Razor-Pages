@@ -17,9 +17,9 @@ logs/
 .vscode/
 
 # Razor specific
-**/appsettings*.json
-!appsettings.json # Keep main config
-secrets.json
+# **/appsettings*.json
+# !appsettings.json # Keep main config
+# secrets.json
 
 # Entity Framework Migrations
 Migrations/
