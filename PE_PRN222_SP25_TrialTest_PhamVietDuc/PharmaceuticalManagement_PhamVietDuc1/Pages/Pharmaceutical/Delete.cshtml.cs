@@ -6,17 +6,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Repository.Models;
+using Service.Services;
 
 namespace PharmaceuticalManagement_PhamVietDuc1.Pages.Pharmaceutical
 {
     public class DeleteModel : PageModel
     {
         private readonly Repository.Models.Sp25PharmaceuticalDbContext _context;
+        private readonly ManufactureService _manufactureService;
+        private readonly MedicineService _medicineService;
 
 
-        public DeleteModel(Repository.Models.Sp25PharmaceuticalDbContext context)
+        public DeleteModel(Repository.Models.Sp25PharmaceuticalDbContext context, ManufactureService manufactureService, MedicineService medicineService)
         {
             _context = context;
+            _manufactureService = manufactureService;
+            _medicineService = medicineService;
         }
 
         [BindProperty]
@@ -24,8 +29,8 @@ namespace PharmaceuticalManagement_PhamVietDuc1.Pages.Pharmaceutical
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
-            var role = HttpContext.Session.GetString("UserRole");
-            if (role != "Manager")
+            var role = HttpContext.Session.GetInt32("UserRole");
+            if (role != 2)
             {
                 HttpContext.Session.SetString("ErrorMessage", "You don't have permission");
                 return RedirectToPage("./Index");
@@ -36,7 +41,7 @@ namespace PharmaceuticalManagement_PhamVietDuc1.Pages.Pharmaceutical
                 return NotFound();
             }
 
-            var medicineinformation = await _context.MedicineInformations.FirstOrDefaultAsync(m => m.MedicineId == id);
+            var medicineinformation = await _medicineService.GetMedicineByID(id);
 
             if (medicineinformation == null)
             {
@@ -56,7 +61,7 @@ namespace PharmaceuticalManagement_PhamVietDuc1.Pages.Pharmaceutical
                 return NotFound();
             }
 
-            var medicineinformation = await _context.MedicineInformations.FindAsync(id);
+            var medicineinformation = await _medicineService.GetMedicineByID(id);
             if (medicineinformation != null)
             {
                 MedicineInformation = medicineinformation;
