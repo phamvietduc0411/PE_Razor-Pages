@@ -1,0 +1,84 @@
+# Build folders
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+logs/
+
+# Visual Studio settings
+.vs/
+.vscode/
+
+# Razor specific
+**/appsettings*.json
+!appsettings.json # Keep main config
+secrets.json
+
+# Entity Framework Migrations
+Migrations/
+
+# NuGet packages
+*.nupkg
+project.lock.json
+project.assets.json
+packages/
+.nuget/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Test results
+TestResults/
+*.trx
+*.coverage
+.coverage/
+*.coverlet/
+
+# Publish outputs
+publish/
+*.publish.xml
+
+# Coverage reports
+coverage/
+
+# Rider & Resharper
+.idea/
+*.DotSettings.user
+
+# Azure pipelines
+.azure-pipelines.yml
+.vsts-ci.yml
+
+# SQL database files
+*.mdf
+*.ldf
+*.sqlite
+*.db
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.bak
+
+# StyleCop
+StyleCop.Cache
+
+# Web-related
+node_modules/
+wwwroot/lib/
+
+# NPM & Yarn
+*.npm
+*.yarn-integrity
+yarn-error.log

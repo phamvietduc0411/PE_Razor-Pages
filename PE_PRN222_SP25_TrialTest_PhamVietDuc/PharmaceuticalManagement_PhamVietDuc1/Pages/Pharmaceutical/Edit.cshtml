@@ -1,0 +1,60 @@
+﻿@page
+@model PharmaceuticalManagement_PhamVietDuc1.Pages.Pharmaceutical.EditModel
+
+<h4>MedicineInformation</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MedicineInformation.MedicineId" />
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="MedicineInformation.MedicineName" class="control-label"></label>
+                <input asp-for="MedicineInformation.MedicineName" class="form-control" />
+                <span asp-validation-for="MedicineInformation.MedicineName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="MedicineInformation.ActiveIngredients" class="control-label"></label>
+                <input asp-for="MedicineInformation.ActiveIngredients" class="form-control" />
+                <span asp-validation-for="MedicineInformation.ActiveIngredients" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="MedicineInformation.ExpirationDate" class="control-label"></label>
+                <input asp-for="MedicineInformation.ExpirationDate" class="form-control" />
+                <span asp-validation-for="MedicineInformation.ExpirationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="MedicineInformation.DosageForm" class="control-label"></label>
+                <input asp-for="MedicineInformation.DosageForm" class="form-control" />
+                <span asp-validation-for="MedicineInformation.DosageForm" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="MedicineInformation.WarningsAndPrecautions" class="control-label"></label>
+                <input asp-for="MedicineInformation.WarningsAndPrecautions" class="form-control" />
+                <span asp-validation-for="MedicineInformation.WarningsAndPrecautions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="MedicineInformation.ManufacturerId" class="control-label"></label>
+                <select asp-for="MedicineInformation.ManufacturerId" class="form-control" asp-items="Model.Manufacturers"></select>
+                <span asp-validation-for="MedicineInformation.ManufacturerId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
