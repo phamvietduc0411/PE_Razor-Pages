@@ -52,17 +52,22 @@ namespace PharmaceuticalManagement_PhamVietDuc1.Pages.Pharmaceutical
         //        .ToListAsync();
         //}
 
-        public async Task OnGetAsync(int? pageIndex, string? searchTerm)
+        public async Task<IActionResult> OnGetAsync(int? pageIndex, string? searchTerm)
         {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserEmail")))
+            {
+                return RedirectToPage("/Login/Login");
+            }
+
             ErrorMessage = HttpContext.Session.GetString("ErrorMessage") ?? string.Empty;
             HttpContext.Session.Remove("ErrorMessage");
 
             PageIndex = pageIndex ?? 1;
 
-            // Gọi SearchAsync để lấy dữ liệu tìm kiếm
+
             var query = await _medicineService.Search(searchTerm);
 
-            // Phân trang
+
             int totalRecords = query.Count();
             TotalPages = (int)Math.Ceiling(totalRecords / (double)PageSize);
 
@@ -72,7 +77,7 @@ namespace PharmaceuticalManagement_PhamVietDuc1.Pages.Pharmaceutical
                 .OrderBy(m => m.MedicineName)
                 .ToList();
 
-
+            return Page();
         }
 
 
